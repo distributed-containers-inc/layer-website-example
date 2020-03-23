@@ -1,0 +1,20 @@
+FROM vm/ubuntu:18.04
+
+# install docker & curl
+# if you use a different build, feel free to change this step
+RUN apt-get update && \
+    apt-get -y install docker.io && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN docker pull gitlab/gitlab-ce:latest
+RUN docker run --detach \
+  --hostname gitlab.example.com \
+  --publish 80:80 \
+  --name gitlab \
+  --restart always \
+  --volume /srv/gitlab/config:/etc/gitlab \
+  --volume /srv/gitlab/logs:/var/log/gitlab \
+  --volume /srv/gitlab/data:/var/opt/gitlab \
+  gitlab/gitlab-ce:latest
+
+
