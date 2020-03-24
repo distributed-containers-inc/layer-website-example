@@ -8,6 +8,6 @@ RUN apt-get update && \
 
 RUN docker pull gogs/gogs
 RUN mkdir -p /var/gogs
-RUN docker run --detach --name=gogs -p 10022:22 -p 80:3000 -v /var/gogs:/data gogs/gogs
 
-RUN sleep 25
+RUN docker run --detach --name=gogs -p 10022:22 -p 3000:3000 -v /var/gogs:/data gogs/gogs
+EXPOSE WEBSITE http://localhost:3000
